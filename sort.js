@@ -159,6 +159,9 @@
 	function clearObject() {
 		delete _global.Object.prototype.sortjs;
 	}
+	function inplace(data, fieldList) {
+		return sortjs(data,fieldList, true);
+	}
 
 	
 	exports.getObjectSorter = getObjectSorter; // internal function that actually creates sorters
@@ -169,5 +172,6 @@
 	exports.clearArray = clearArray;	       // removes sortjs method from Array prototype
 	exports.clearObject = clearObject;         // removes sortjs method from Object prototype
 	exports.sort = sortjs;                     // function that accepts two arguments: data to sort and properties array
+	exports.inplace = inplace;                 // helper function that always do inplace sorting
 
 })(typeof exports === "undefined" ? this['sortjs'] = {} : exports);

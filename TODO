@@ -3,4 +3,7 @@ TODO
 
  *  [+] allow to specify single sort property without square brackets: sortjs.sort("i:price")
  *  [+] add tests for in-place array sorts
+ *  [+] add function for mandatory inplace sorting
  *  timing and optimization
+ *  sort by date
+ *  sort arrays of simple values
