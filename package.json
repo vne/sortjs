@@ -5,6 +5,7 @@
 	"keywords": ["sort", "order", "function", "generator", "array", "object"],
 	"license": "MIT",
 	"author": "Vladimir Neverov <sanguini@gmail.com>",
+	"homepage": "https://github.com/vne/sortjs/wiki",
 	"files": [
 		"sort.js",
 		"sort.min.js",
@@ -14,5 +15,17 @@
 		"assets/"
 	],
 	"main": "sort.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vne/sortjs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/vne/sortjs/issues",
+		"email": "sanguini@gmail.com"
+	},
+	"dependencies": {
+		"assert": "0.4.9",
+		"mocha": "1.13.0"
+	}
 
 }
