@@ -1,0 +1,18 @@
+{
+	"name": "SortJS",
+	"version": 0.1,
+	"description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
+	"keywords": ["sort", "order", "function", "generator", "array", "object"],
+	"license": "MIT",
+	"author": "Vladimir Neverov <sanguini@gmail.com>",
+	"files": [
+		"sort.js",
+		"sort.min.js",
+		"README.md",
+		"test.js",
+		"test.html",
+		"assets/"
+	],
+	"main": "sort.js",
+
+}

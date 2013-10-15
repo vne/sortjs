@@ -1,4 +1,6 @@
-sortjs
+SortJS
 ======
 
-Small javascript addon for sorting arrays of objects and objects of objects both on server (NodeJS) and client (browser) sides
+A lightweight and convenient generator of sort functions for
+arrays of objects and objects of objects that works both on
+server (NodeJS) and client (browser) sides.
