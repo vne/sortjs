@@ -9,7 +9,7 @@ try {
 
 if (is_nodejs) {
 	assert = require('assert');
-	sortjs = require('./sort.min');
+	sortjs = require('./sort');
 }
 
 
@@ -31,6 +31,7 @@ var objectList = [
 		6: { surname: 'augsburg', name: 'Theodor', age: 154, income: 210000, percent: 99.9 },
 		7: { surname: 'Zorro', name: 'Vasily', age: 30, income: 17000, percent: 7.3 }
 	};
+
 function clone(opt) {
 	var o = [];
 	for (var i in objectList) {
@@ -77,6 +78,12 @@ describe('objectSorter', function() {
 				clone().sort( sortjs.getObjectSorter(['abcdef', 'test']) ).map(function(e) { return e.id })
 			);
 		});
+		it('should sort by single string argument', function() {
+			assert.deepEqual(
+				[6,3,5,1,2,4,7],
+				clone().sort( sortjs.getObjectSorter('i:surname') ).map(function(e) { return e.id })
+			);
+		})
 	});
 
 	describe('case-insensitive string sort', function() {
@@ -208,3 +215,4 @@ describe('sortjs interface', function() {
 		})
 	})
 });
+

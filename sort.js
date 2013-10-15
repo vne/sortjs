@@ -40,6 +40,9 @@
 			getObjectSorter(['-n:price', 'i:address']) - reverse numerical (integer) sort by price, then case-insensitevely by address
 	*/
 	function getObjectSorter(fieldList, args) {
+		if (typeof fieldList === "string") {
+			fieldList = [ fieldList ];
+		}
 		if (!fieldList || ! fieldList.constructor || (fieldList.constructor !== Array)) { return function() {}; }
 		if (args && args.get && (typeof args.get !== "function")) {
 			throw new Error("'get' argument is not a function");
