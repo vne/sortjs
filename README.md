@@ -51,6 +51,7 @@ This behaviour can be altered.
 	var sortedObjKeys = sortjs.sort(obj, ["surname", "name"]); // returns array of object keys sorted in requested order
 
 	sortjs.sort(array, ["surname", "name"], true);             // perform an inplace sort like build-in Javascript method
+	sortjs.inplace(array, ["surname", "name"]);                // another way of doing inplace sorting
 
 ### As an Array or Object method (includes mangling of native objects prototypes!)
 
@@ -64,6 +65,8 @@ This behaviour can be altered.
 	sortjs.improve(true);                                  // add .sortjs method to prototypes performing inplace sorting for arrays
 	array.sortjs(["surname", "name"]);
 	sortjs.clear();
+
+	array.isortjs(["surname", "name"]);                    // another way of doing inplace sorting
 
 List of sort fields
 -------------------

@@ -136,6 +136,10 @@
 			array.sort(getObjectSorter(fieldList));
 			return array;
 		}
+		_global.Array.prototype.isortjs = function(fieldList) {
+			this.sort(getObjectSorter(fieldList));
+			return this;
+		}
 	}
 
 	function improveObject() {
@@ -155,6 +159,7 @@
 	}
 	function clearArray() {
 		delete _global.Array.prototype.sortjs;
+		delete _global.Array.prototype.isortjs;
 	}
 	function clearObject() {
 		delete _global.Object.prototype.sortjs;

@@ -180,6 +180,17 @@ describe('improvement of native prototypes', function() {
 				clone().sortjs( ['i:surname', 'i:name'] ).map(function(e) { return e.id })
 			);
 		});
+		it('should perform in-place sorting', function() {
+			var arr = clone(),
+				before = arr.map(function(e) { return e.id }),
+				res, after;
+			res = arr.isortjs(['i:surname', 'i:name']).map(function(e) { return e.id });
+			after = arr.map(function(e) { return e.id });
+			assert.deepEqual(res, after);
+			assert.notDeepEqual(res, before);
+			assert.deepEqual([6,3,5,1,2,4,7], res);
+			assert.deepEqual([1,2,3,4,5,6,7], before);
+		});
 		it('should sort object keys', function() {
 			assert.deepEqual(
 				[6,3,5,1,2,4,7],
