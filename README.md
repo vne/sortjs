@@ -76,7 +76,7 @@ Property names are case-sensitive. They can have the following prefixes:
 
  *  &ndash;&nbsp;(minus sign) means reverse sorting by this property
  *  i: (letter 'i' followed by a colon) means case-insensitive string comparison by this property
- *  s: (letter 'i' followed by a colon) means case-sensitive string comparison by this property
+ *  s: (letter 's' followed by a colon) means case-sensitive string comparison by this property
  *  n: (letter 'n' followed by a colon) means integer comparison by this property
  *  f: (letter 'f' followed by a colon) means float comparison by this property
 
