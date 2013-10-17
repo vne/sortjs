@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= pkg.author %> <%= grunt.template.today("dd.mm.yyyy") %> */\n'
+				banner: '/*! <%= pkg.name %> <%= pkg.version %> // <%= grunt.template.today("dd.mm.yyyy") %> // <%= pkg.author %> // <%= pkg.homepage %> */\n'
 			},
 			build: {
 				src: 'sort.js',
