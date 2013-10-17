@@ -51,7 +51,7 @@ function clone(opt) {
 
 describe('objectSorter', function() {
 
-	describe('wrong or empty arguments', function() {
+	describe('weird arguments', function() {
 		it('should return function that does nothing on empty argument', function() {
 			assert.deepEqual(
 				[1,2,3,4,5,6,7],
@@ -83,7 +83,13 @@ describe('objectSorter', function() {
 				[6,3,5,1,2,4,7],
 				clone().sort( sortjs.getObjectSorter('i:surname') ).map(function(e) { return e.id })
 			);
-		})
+		});
+		it('should sort by fields without prefixes', function() {
+			assert.deepEqual(
+				[3,5,1,4,7,6,2],
+				clone().sort( sortjs.getObjectSorter('surname') ).map(function(e) { return e.id })
+			);
+		});
 	});
 
 	describe('case-insensitive string sort', function() {

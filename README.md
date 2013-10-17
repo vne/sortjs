@@ -95,3 +95,38 @@ More examples of library usage can be found in **test.js** file. To run tests yo
 need [Mocha](http://visionmedia.github.io/mocha/), the tests themselves use built-in
 NodeJS [assert](http://nodejs.org/api/assert.html) module. To run tests in browser
 open **test.html** file.
+
+Benchmarking
+------------
+
+TODO: explain
+
+Array size = 1000, average over 500 samples
+Sparse data, single argument
+----------------------------
+            f |  0.84983 +/- 0.36137 ms | sorter 1 | rel( sortByF)  1.33341
+         f:f  |  1.09565 +/- 0.22603 ms | sorter F | rel( sortByF)  1.71911
+      sortByF |  0.63734 +/- 0.13719 ms | sorter <fn:_>
+            n |  2.94630 +/- 0.32551 ms | sorter 1 | rel( sortByI)  5.28199
+          n:n |  1.45665 +/- 0.12823 ms | sorter F | rel( sortByI)  2.61142
+      sortByI |  0.55780 +/- 0.18799 ms | sorter <fn:_>
+            s |  0.98047 +/- 0.07994 ms | sorter 1 | rel( sortByS)  1.11397
+          s:s |  1.71471 +/- 0.16757 ms | sorter F | rel( sortByS)  1.94817
+      sortByS |  0.88016 +/- 0.14932 ms | sorter <fn:_>
+Sparse data, four arguments
+---------------------------
+   f,f2,f3,f4 |  0.99000 +/- 0.16634 ms | sorter S | rel(sortByFFFF)  1.72934
+f: f,f2,f3,f4 |  1.27399 +/- 0.36536 ms | sorter F | rel(sortByFFFF)  2.22542
+   sortByFFFF |  0.57247 +/- 0.13836 ms | sorter <fn:_>
+Dense data, four arguments
+--------------------------
+   f,f2,f3,f4 |  0.97672 +/- 0.19026 ms | sorter S | rel(sortByFFFF-D)  1.66231
+f: f,f2,f3,f4 |  1.25018 +/- 0.26922 ms | sorter F | rel(sortByFFFF-D)  2.12772
+ sortByFFFF-D |  0.58757 +/- 0.23306 ms | sorter <fn:_>
+   i,i2,i3,i4 |  2.13215 +/- 0.39709 ms | sorter S | rel(sortByIIII-D)  3.85918
+i: i,i2,i3,i4 |  6.21322 +/- 0.46786 ms | sorter F | rel(sortByIIII-D) 11.24590
+f: i,i2,i3,i4 |  2.54000 +/- 0.27203 ms | sorter F | rel(sortByIIII-D)  4.59739
+ sortByIIII-D |  0.55249 +/- 0.12784 ms | sorter <fn:_>
+   s,s2,s3,s4 |  1.26455 +/- 0.46008 ms | sorter S | rel(sortBySSSS-D)  1.43919
+s: s,s2,s3,s4 |  1.75010 +/- 0.18142 ms | sorter F | rel(sortBySSSS-D)  1.99180
+ sortBySSSS-D |  0.87865 +/- 0.12496 ms | sorter <fn:_>
