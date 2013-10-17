@@ -1,32 +1,47 @@
 {
-	"name": "sortjs",
-	"version": "0.1.5",
-	"description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
-	"keywords": ["sort", "order", "function", "generator", "array", "object"],
-	"license": "MIT",
-	"author": "Vladimir Neverov <sanguini@gmail.com>",
-	"homepage": "https://github.com/vne/sortjs/wiki",
-	"files": [
-		"sort.js",
-		"sort.min.js",
-		"README.md",
-		"test.js",
-		"test.html",
-		"assets/"
-	],
-	"main": "sort.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/vne/sortjs.git"
-	},
-	"bugs": {
-		"url": "https://github.com/vne/sortjs/issues",
-		"email": "sanguini@gmail.com"
-	},
-	"dependencies": {
-		"assert": "0.4.9",
-		"mocha": "1.13.0",
-		"printf": "0.1.2"
-	}
-
+  "name": "sortjs",
+  "version": "0.1.6",
+  "description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
+  "keywords": [
+    "sort",
+    "order",
+    "function",
+    "generator",
+    "array",
+    "object"
+  ],
+  "license": "MIT",
+  "author": "Vladimir Neverov <sanguini@gmail.com>",
+  "homepage": "https://github.com/vne/sortjs/wiki",
+  "files": [
+  	"Gruntfile.js",
+  	"LICENCE",
+  	"TODO",
+  	"benchmark.js",
+    "sort.js",
+    "sort.min.js",
+    "README.md",
+    "test.js",
+    "test.html",
+    "assets/"
+  ],
+  "main": "sort.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vne/sortjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vne/sortjs/issues",
+    "email": "sanguini@gmail.com"
+  },
+  "devDependencies": {
+    "assert": "~0.4.9",
+    "mocha": "~1.13.0",
+    "printf": "~0.1.2",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-markdown": "~0.4.0"
+  }
 }
