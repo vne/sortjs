@@ -1,4 +1,5 @@
 (function(exports) {
+	"use strict";
 	var _global,
 		sortjs = function(data, fieldList, inplace) {
 			var array;
@@ -53,20 +54,25 @@
 		if (args && args.context && (typeof args.context !== "object")) {
 			throw new Error("'context' argument is not an object");
 		}
-		var lst = [], i, infld, dir, field, opt, has = {}, sorter, sorters, first, second, third;;
+		var lst = [], i, infld, dir, field, opt, has = {}, sorter, sorters, first, second, third,
+			flagfns = {
+				noop: function(x) { return x; },
+				tostring: function(x) { return x.toString(); },
+				toistring: function(x) { return x.toString().toLowerCase(); },
+			};
 		for (i = 0; i < fieldList.length; i++) {
 			infld = fieldList[i];
-			field = { src: infld, flagfn: function(x) { return x; } };
+			field = { src: infld, flagfn: flagfns.noop };
 			dir = 1;
 
 			// get sort direction
-			if (infld.indexOf('-') === 0) {
+			if (infld.indexOf("-") === 0) {
 				infld = infld.substr(1);
 				dir = -1;
 			}
 			// check for sort flags
-			if (infld.indexOf(':') === 1) {
-				opt = infld.split(':');
+			if (infld.indexOf(":") === 1) {
+				opt = infld.split(":");
 				field[opt[0]] = true;
 				infld = opt[1];
 				has.flags = true;
@@ -78,7 +84,7 @@
 					field: infld,
 					dir: dir,
 					options: field
-				}
+				};
 				field.use_callback = true;
 				has.callbacks = true;
 			} else if (args && args.context) {
@@ -88,17 +94,17 @@
 			}
 			if (field.s) {
 				field.to_string = true;
-				field.flagfn = function(x) { return x.toString(); }
+				field.flagfn = flagfns.tostring;
 				has.str = true;
 			}
 			else if (field.i) {
 				field.to_istring = true;
-				field.flagfn = function(x) { return x.toString().toLowerCase(); }
+				field.flagfn = flagfns.toistring;
 				has.istr = true;
 			}
 			if (field.f) {
 				field.to_float = true;
-				field.flagtn = parseFloat;
+				field.flagfn = parseFloat;
 				has.floats = true;
 			}
 			else if (field.n) {
@@ -112,7 +118,7 @@
 		if (lst.length > 0) { first  = lst[0].name; }
 		if (lst.length > 1) { second = lst[1].name; }
 		if (lst.length > 2) { third  = lst[2].name; }
-		// console.log(lst);
+		// console.log(lst, has);
 
 sorters = {
 			universal: function(a, b) {
@@ -129,9 +135,9 @@ sorters = {
 					} else {
 						f.context.this = this;
 						f.context.element = a;
-						ai = args.get(context);
+						ai = args.get(f.context);
 						f.context.element = b;
-						bi = args.get(context);
+						bi = args.get(f.context);
 					}
 
 					// process options, convert a pair of elements to appropriate strings or numbers
@@ -145,8 +151,8 @@ sorters = {
 						ai = typeof ai !== "number" ? parseFloat(ai) : ai;
 						bi = typeof bi !== "number" ? parseFloat(bi) : bi;
 					} else if (f.to_int) {
-						ai = (typeof ai === "number") && (ai % 1 === 0) ? ai : parseInt(ai);
-						bi = (typeof bi === "number") && (bi % 1 === 0) ? bi : parseInt(bi);
+						ai = (typeof ai === "number") && (ai % 1 === 0) ? ai : parseInt(ai, 10);
+						bi = (typeof bi === "number") && (bi % 1 === 0) ? bi : parseInt(bi, 10);
 						// console.log('to_int', f.name, ai, bi, typeof ai, ai % 1 );
 					}
 
@@ -181,20 +187,20 @@ sorters = {
 					bi = typeof b === "object" ? b[f.name] : b;
 
 					// process options, convert a pair of elements to appropriate strings or numbers
-					// if (f.to_string) {
-					// 	ai = ai.toString();
-					// 	bi = bi.toString();
-					// } else if (f.to_istring) {
-					// 	ai = typeof ai !== "string" ? ai.toString().toLowerCase() : ai.toLowerCase();
-					// 	bi = typeof bi !== "string" ? bi.toString().toLowerCase() : bi.toLowerCase();
-					// } else if (f.to_float || f.to_int) {
-					// 	ai = typeof ai !== "number" ? parseFloat(ai) : ai;
-					// 	bi = typeof bi !== "number" ? parseFloat(bi) : bi;
-					// } else if (f.to_int) {
-					// 	ai = (typeof ai === "number") && (ai % 1 === 0) ? ai : parseInt(ai);
-					// 	bi = (typeof bi === "number") && (bi % 1 === 0) ? bi : parseInt(bi);
-					// 	// console.log('to_int', f.name, ai, bi, typeof ai, ai % 1 );
-					// }
+					if (f.to_string) {
+						ai = ai.toString();
+						bi = bi.toString();
+					} else if (f.to_istring) {
+						ai = typeof ai !== "string" ? ai.toString().toLowerCase() : ai.toLowerCase();
+						bi = typeof bi !== "string" ? bi.toString().toLowerCase() : bi.toLowerCase();
+					} else if (f.to_float || f.to_int) {
+						ai = typeof ai !== "number" ? parseFloat(ai) : ai;
+						bi = typeof bi !== "number" ? parseFloat(bi) : bi;
+					} else if (f.to_int) {
+						ai = (typeof ai === "number") && (ai % 1 === 0) ? ai : parseInt(ai, 10);
+						bi = (typeof bi === "number") && (bi % 1 === 0) ? bi : parseInt(bi, 10);
+						// console.log('to_int', f.name, ai, bi, typeof ai, ai % 1 );
+					}
 					ai = f.flagfn(ai);
 					bi = f.flagfn(bi);
 
@@ -220,9 +226,9 @@ sorters = {
 					} else {
 						f.context.this = this;
 						f.context.element = a;
-						ai = args.get(context);
+						ai = args.get(f.context);
 						f.context.element = b;
-						bi = args.get(context);
+						bi = args.get(f.context);
 					}
 
 					// do actual comparison
@@ -233,29 +239,29 @@ sorters = {
 					}
 				}
 			}
-		} // sorters
+		}; // sorters
 
 		// return FNS.universal;
 		if (has.flags && (has.contexts || has.callbacks)) {
 			// console.log('\nuniversal', has.contexts, has.callbacks);
 			sorter = sorters.universal;
-			sorter.type = 'U';
+			sorter.type = "U";
 		} else if (has.flags) {
 			// console.log('\nflags');
 			sorter = sorters.withflags;
-			sorter.type = 'F';
+			sorter.type = "F";
 		} else if (has.contexts || has.callbacks) {
 			// console.log('\ncontexts');
 			sorter = sorters.withcontexts;
-			sorter.type = 'C';
+			sorter.type = "C";
 		} else if (lst.length < 3) {
 			// console.log('\nsingle');
 			sorter = sorters.single;
-			sorter.type = '1';
+			sorter.type = "1";
 		} else {
 			// console.log('\nsimple');
 			sorter = sorters.simple;
-			sorter.type = 'S';
+			sorter.type = "S";
 		}
 		return sorter;
 
@@ -344,11 +350,11 @@ sorters = {
 			var array = inplace ? this : this.slice(0); // slice(0) does cloning of the array
 			array.sort(getObjectSorter(fieldList));
 			return array;
-		}
+		};
 		_global.Array.prototype.isortjs = function(fieldList) {
 			this.sort(getObjectSorter(fieldList));
 			return this;
-		}
+		};
 	}
 
 	function improveObject() {
@@ -359,7 +365,7 @@ sorters = {
 				context: this
 			}));
 			return array;
-		}
+		};
 	}
 
 	function clear() {
@@ -391,7 +397,7 @@ function sortByF(a, b) {
 	// 	     if (a[ lst[i].name ] < b[ lst[i].name ]) { return -lst[i].dir; }
 	// 	else if (a[ lst[i].name ] > b[ lst[i].name ]) { return  lst[i].dir; }
 	// }
-}	
+}
 	exports.getObjectSorter = getObjectSorter; // internal function that actually creates sorters
 	exports.improve = improve;                 // calls improveArray and improveObject consequently
 	exports.improveArray = improveArray;       // adds sortjs method to Array prototypes
@@ -404,4 +410,4 @@ function sortByF(a, b) {
 	exports.getSortByF = getSortByF;
 	exports.sortByF = sortByF;
 
-})(typeof exports === "undefined" ? this['sortjs'] = {} : exports);
+})(typeof exports === "undefined" ? this.sortjs = {} : exports);
