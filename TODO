@@ -7,3 +7,5 @@ TODO
  *  [+] timing and optimization
  *  sort by date
  *  sort arrays of simple values
+ *  sort by inner fields (e.g. obj.fld1.fld2, where obj.fld1 is object itself)
+ 

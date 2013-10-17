@@ -130,8 +130,9 @@ sorters = {
 						bi = typeof b === "object" ? b[f.name] : b;
 						// console.log('simple', ai, bi, f.name);
 					} else if (f.use_context) {
-						ai = f.context[a][f.name];
-						bi = f.context[b][f.name];
+						ai = f.context[a][f.name] || a;
+						bi = f.context[b][f.name] || b;
+						// console.log('contexts', ai, bi, f.name);
 					} else {
 						f.context.this = this;
 						f.context.element = a;
@@ -221,8 +222,9 @@ sorters = {
 						bi = typeof b === "object" ? b[f.name] : b;
 						// console.log('simple', ai, bi, f.name);
 					} else if (f.use_context) {
-						ai = f.context[a][f.name];
-						bi = f.context[b][f.name];
+						ai = f.context[a][f.name] || a;
+						bi = f.context[b][f.name] || b;
+						// console.log('contexts', ai, bi, f.name);
 					} else {
 						f.context.this = this;
 						f.context.element = a;
