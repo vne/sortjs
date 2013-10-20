@@ -10,13 +10,16 @@ module.exports = function(grunt) {
 				dest: 'sort.min.js'
 			}
 		},
-		test: {
+		simplemocha: {
 			options: {
 				globals: ['should'],
 				timeout: 3000,
 				ignoreLeaks: false,
 				ui: 'bdd',
 				reporter: 'tap'
+			},
+			all: {
+				src: ["test.js"]
 			}
 		},
 		markdown: {
@@ -26,14 +29,51 @@ module.exports = function(grunt) {
 				dest: '.',
 				ext: '.html'
 			}
-		}
-	});
-	grunt.loadNpmTasks('grunt-simple-mocha');
-	grunt.renameTask('simplemocha', 'test');
+		},
+		natural_docs: {
+			options: {
+				bin: '/usr/bin/naturaldocs',
+				inputs: ['./'],
+				excludes: ['node_modules/', 'assets/', 'junk/', 'ndoc/'],
+				format: 'HTML',
+				output: './doc/',
+				project: './ndoc',
 
+			},
+			sortjs: {
+
+			}
+		},
+		clean: {
+			docs: ["./ndoc/"]
+		},
+		mkdir: {
+			docs: {
+				options: {
+					create: ["./ndoc/"]
+				}
+			}
+		},
+		execute: {
+			benchmark: {
+				src: ["./benchmark.js"]
+			}
+		}
+
+	});
+	grunt.loadNpmTasks('grunt-execute');
+	grunt.loadNpmTasks('grunt-mkdir');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-natural-docs');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-simple-mocha');
+
 	grunt.loadNpmTasks('grunt-markdown');
 
-	grunt.registerTask('default', ['test', 'uglify', ]);
-	grunt.registerTask('build', ['uglify', 'markdown']);
+	grunt.registerTask('test', ['simplemocha']);
+	grunt.registerTask('docs', ['mkdir', 'natural_docs', 'clean']);
+	grunt.registerTask('build', ['uglify', 'markdown', 'docs']);
+	grunt.registerTask('benchmark', ["execute"]);
+
+	grunt.registerTask('default', ['test', 'build']);
 }

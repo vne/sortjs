@@ -14,13 +14,13 @@ if (is_nodejs) {
 
 
 var objectList = [
-	{ id: 1, surname: 'Smith', name: 'John', age: 30, income: 32000, percent: 55.3 },
-	{ id: 2, surname: 'smith', name: 'Susanne', age: 28, income: 40000, percent: 55.1 },
-	{ id: 3, surname: 'Bittey', name: 'Chris', age: 55, income: 20000, percent: 87.5 },
-	{ id: 4, surname: 'The Fourth', name: 'Jane', age: 387, income: 150000, percent: 15.8 },
-	{ id: 5, surname: 'Quinne', name: 'Stew', age: 5, income: 8500, percent: 31.7 },
-	{ id: 6, surname: 'augsburg', name: 'Theodor', age: 154, income: 210000, percent: 99.9 },
-	{ id: 7, surname: 'Zorro', name: 'Vasily', age: 30, income: 17000, percent: 7.3 }
+	{ id: 1, surname: 'Smith', name: 'John', age: 30, income: 32000, percent: 55.3, birthday: new Date('09/18/2013'), strdate: "09/18/2013" },
+	{ id: 2, surname: 'smith', name: 'Susanne', age: 28, income: 40000, percent: 55.1, birthday: new Date('09/18/2012'), strdate: "09/18/2012" },
+	{ id: 3, surname: 'Bittey', name: 'Chris', age: 55, income: 20000, percent: 87.5, birthday: new Date('08/18/2011'), strdate: "08/18/2011" },
+	{ id: 4, surname: 'The Fourth', name: 'Jane', age: 387, income: 150000, percent: 15.8, birthday: new Date('07/18/2010'), strdate: "07/18/2010" },
+	{ id: 5, surname: 'Quinne', name: 'Stew', age: 5, income: 8500, percent: 31.7, birthday: new Date('09/18/2009'), strdate: "09/18/2009" },
+	{ id: 6, surname: 'augsburg', name: 'Theodor', age: 154, income: 210000, percent: 99.9, birthday: new Date('09/18/2009'), strdate: "09/18/2009" },
+	{ id: 7, surname: 'Zorro', name: 'Vasily', age: 30, income: 17000, percent: 7.3, birthday: new Date('12/18/2008'), strdate: "12/18/2008" }
 ],
 	objectObject = {
 		1: { surname: 'Smith', name: 'John', age: 30, income: 32000, percent: 55.3 },
@@ -156,6 +156,27 @@ describe('objectSorter', function() {
 			assert.deepEqual(
 				[7,4,5,1,2,3,6],
 				clone().sort( sortjs.getObjectSorter(['n:percent', 'n:income']) ).map(function(e) { return e.id })
+			);
+		});
+	});
+
+	describe('date sort', function() {
+		it('should sort by date and return correct ID sequence', function() {
+			assert.deepEqual(
+				[7,5,6,4,3,2,1],
+				clone().sort( sortjs.getObjectSorter(['d:birthday']) ).map(function(e) { return e.id })
+			);
+		});
+		it('should sort by date in string and return correct ID sequence', function() {
+			assert.deepEqual(
+				[7,5,6,4,3,2,1],
+				clone().sort( sortjs.getObjectSorter(['d:strdate']) ).map(function(e) { return e.id })
+			);
+		});
+		it('should return incorrect ID sequence in case of comparing dates as strings', function() {
+			assert.deepEqual(
+				[4,3,5,6,2,1,7],
+				clone().sort( sortjs.getObjectSorter(['strdate']) ).map(function(e) { return e.id })
 			);
 		});
 	});

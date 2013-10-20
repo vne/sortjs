@@ -16,13 +16,13 @@ SortJS can be used to sort arrays of objects and objects of objects
 by multiple properties. An array may look like this:
 
 	var array = [
-		{ id: 1, surname: 'Smith', name: 'John', age: 30, income: 32000, percent: 55.3 },
-		{ id: 2, surname: 'smith', name: 'Susanne', age: 28, income: 40000, percent: 55.1 },
-		{ id: 3, surname: 'Bittey', name: 'Chris', age: 55, income: 20000, percent: 87.5 },
-		{ id: 4, surname: 'The Fourth', name: 'Jane', age: 387, income: 150000, percent: 15.8 },
-		{ id: 5, surname: 'Quinne', name: 'Stew', age: 5, income: 8500, percent: 31.7 },
-		{ id: 6, surname: 'augsburg', name: 'Theodor', age: 154, income: 210000, percent: 99.9 },
-		{ id: 7, surname: 'Zorro', name: 'Vasily', age: 30, income: 17000, percent: 7.3 }
+	{ id: 1, surname: 'Smith', name: 'John', age: 30, income: 32000, percent: 55.3, birthday: new Date('09/18/2013'), strdate: "09/18/2013" },
+	{ id: 2, surname: 'smith', name: 'Susanne', age: 28, income: 40000, percent: 55.1, birthday: new Date('09/18/2012'), strdate: "09/18/2012" },
+	{ id: 3, surname: 'Bittey', name: 'Chris', age: 55, income: 20000, percent: 87.5, birthday: new Date('08/18/2011'), strdate: "08/18/2011" },
+	{ id: 4, surname: 'The Fourth', name: 'Jane', age: 387, income: 150000, percent: 15.8, birthday: new Date('07/18/2010'), strdate: "07/18/2010" },
+	{ id: 5, surname: 'Quinne', name: 'Stew', age: 5, income: 8500, percent: 31.7, birthday: new Date('09/18/2009'), strdate: "09/18/2009" },
+	{ id: 6, surname: 'augsburg', name: 'Theodor', age: 154, income: 210000, percent: 99.9, birthday: new Date('09/18/2009'), strdate: "09/18/2009" },
+	{ id: 7, surname: 'Zorro', name: 'Vasily', age: 30, income: 17000, percent: 7.3, birthday: new Date('12/18/2008'), strdate: "12/18/2008" }
 	]
 
 An object may look like this:
@@ -68,6 +68,11 @@ This behaviour can be altered.
 
 	array.isortjs(["surname", "name"]);                    // another way of doing inplace sorting
 
+### Simple get the sorter function
+
+	var sortjs = require('sortjs');
+	var sortFn = sortjs.getObjectSorter(["surname", "name"]);
+
 List of sort fields
 -------------------
 
@@ -79,6 +84,7 @@ Property names are case-sensitive. They can have the following prefixes:
  *  s: (letter 's' followed by a colon) means case-sensitive string comparison by this property
  *  n: (letter 'n' followed by a colon) means integer comparison by this property
  *  f: (letter 'f' followed by a colon) means float comparison by this property
+ *  d: (letter 'd' followed by a colon) means date comparison by this property
 
 Minus and one of the letters can be combined like this: '-i:property'. More than one letter prefix
 is not allowed (and is not needed).
@@ -104,29 +110,36 @@ TODO: explain
 Array size = 1000, average over 500 samples
 Sparse data, single argument
 ----------------------------
-            f |  0.84983 +/- 0.36137 ms | sorter 1 | rel( sortByF)  1.33341
-         f:f  |  1.09565 +/- 0.22603 ms | sorter F | rel( sortByF)  1.71911
-      sortByF |  0.63734 +/- 0.13719 ms | sorter <fn:_>
-            n |  2.94630 +/- 0.32551 ms | sorter 1 | rel( sortByI)  5.28199
-          n:n |  1.45665 +/- 0.12823 ms | sorter F | rel( sortByI)  2.61142
-      sortByI |  0.55780 +/- 0.18799 ms | sorter <fn:_>
-            s |  0.98047 +/- 0.07994 ms | sorter 1 | rel( sortByS)  1.11397
-          s:s |  1.71471 +/- 0.16757 ms | sorter F | rel( sortByS)  1.94817
-      sortByS |  0.88016 +/- 0.14932 ms | sorter <fn:_>
+            f |  0.85594 +/- 0.39481 ms | sorter 1 | rel( sortByF)  1.39450
+          f:f |  1.23858 +/- 0.20522 ms | sorter F | rel( sortByF)  2.01788
+      sortByF |  0.61380 +/- 0.08984 ms | sorter <fn:_>
+            n |  0.81869 +/- 0.39290 ms | sorter 1 | rel( sortByN)  1.10172
+          n:n |  1.93222 +/- 0.22229 ms | sorter F | rel( sortByN)  2.60019
+          f:n |  1.24291 +/- 0.18595 ms | sorter F | rel( sortByN)  1.67258
+      sortByN |  0.74311 +/- 1.03578 ms | sorter <fn:_>
+            s |  1.02231 +/- 0.15645 ms | sorter 1 | rel( sortByS)  0.90074
+          s:s |  2.23925 +/- 1.20828 ms | sorter F | rel( sortByS)  1.97296
+      sortByS |  1.13497 +/- 1.14821 ms | sorter <fn:_>
+            d |  6.97265 +/- 1.91867 ms | sorter 1 | rel( sortByD)  1.11903
+          d:d | 13.62114 +/- 1.37493 ms | sorter F | rel( sortByD)  2.18604
+      sortByD |  6.23096 +/- 0.41902 ms | sorter <fn:_>
 Sparse data, four arguments
 ---------------------------
-   f,f2,f3,f4 |  0.99000 +/- 0.16634 ms | sorter S | rel(sortByFFFF)  1.72934
-f: f,f2,f3,f4 |  1.27399 +/- 0.36536 ms | sorter F | rel(sortByFFFF)  2.22542
-   sortByFFFF |  0.57247 +/- 0.13836 ms | sorter <fn:_>
+   f,f2,f3,f4 |  1.01354 +/- 0.21947 ms | sorter S | rel(sortByFFFF)  1.87147
+f: f,f2,f3,f4 |  1.41474 +/- 0.19859 ms | sorter F | rel(sortByFFFF)  2.61226
+   sortByFFFF |  0.54158 +/- 0.04026 ms | sorter <fn:_>
 Dense data, four arguments
 --------------------------
-   f,f2,f3,f4 |  0.97672 +/- 0.19026 ms | sorter S | rel(sortByFFFF-D)  1.66231
-f: f,f2,f3,f4 |  1.25018 +/- 0.26922 ms | sorter F | rel(sortByFFFF-D)  2.12772
- sortByFFFF-D |  0.58757 +/- 0.23306 ms | sorter <fn:_>
-   i,i2,i3,i4 |  2.13215 +/- 0.39709 ms | sorter S | rel(sortByIIII-D)  3.85918
-i: i,i2,i3,i4 |  6.21322 +/- 0.46786 ms | sorter F | rel(sortByIIII-D) 11.24590
-f: i,i2,i3,i4 |  2.54000 +/- 0.27203 ms | sorter F | rel(sortByIIII-D)  4.59739
- sortByIIII-D |  0.55249 +/- 0.12784 ms | sorter <fn:_>
-   s,s2,s3,s4 |  1.26455 +/- 0.46008 ms | sorter S | rel(sortBySSSS-D)  1.43919
-s: s,s2,s3,s4 |  1.75010 +/- 0.18142 ms | sorter F | rel(sortBySSSS-D)  1.99180
- sortBySSSS-D |  0.87865 +/- 0.12496 ms | sorter <fn:_>
+   f,f2,f3,f4 |  1.02665 +/- 0.14656 ms | sorter S | rel(sortByFFFF-D)  1.80118
+f: f,f2,f3,f4 |  1.50496 +/- 0.33950 ms | sorter F | rel(sortByFFFF-D)  2.64035
+ sortByFFFF-D |  0.56999 +/- 0.13108 ms | sorter <fn:_>
+   n,n2,n3,n4 |  1.03933 +/- 0.48972 ms | sorter S | rel(sortByNNNN-D)  1.73908
+n: n,n2,n3,n4 |  2.08253 +/- 0.40497 ms | sorter F | rel(sortByNNNN-D)  3.48466
+f: n,n2,n3,n4 |  1.47462 +/- 0.51563 ms | sorter F | rel(sortByNNNN-D)  2.46745
+ sortByNNNN-D |  0.59763 +/- 0.70503 ms | sorter <fn:_>
+   s,s2,s3,s4 |  1.29927 +/- 0.40556 ms | sorter S | rel(sortBySSSS-D)  1.36926
+s: s,s2,s3,s4 |  1.93002 +/- 0.66550 ms | sorter F | rel(sortBySSSS-D)  2.03400
+ sortBySSSS-D |  0.94888 +/- 0.21068 ms | sorter <fn:_>
+   d,d2,d3,d4 | 14.40979 +/- 1.49310 ms | sorter S | rel(sortByDDDD-D)  2.19868
+d: d,d2,d3,d4 | 26.66083 +/- 2.93955 ms | sorter F | rel(sortByDDDD-D)  4.06797
+ sortByDDDD-D |  6.55384 +/- 1.18187 ms | sorter <fn:_>

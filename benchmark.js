@@ -13,16 +13,21 @@ tm_ps = process.hrtime();
 
 st.push('Sparse data, single argument')
 st.push(measure("f",       "f", SIZE, TIMES, 'sortByF'));
-st.push(measure("f:f ",    "f:f", SIZE, TIMES, 'sortByF'));
+st.push(measure("f:f",    "f:f", SIZE, TIMES, 'sortByF'));
 st.push(measure("sortByF", sortByF, SIZE, TIMES));
 
-st.push(measure("n",       "n", SIZE, TIMES, 'sortByI'));
-st.push(measure("n:n",     "n:n", SIZE, TIMES, 'sortByI'));
-st.push(measure("sortByI", sortByI, SIZE, TIMES));
+st.push(measure("n",       "n", SIZE, TIMES, 'sortByN'));
+st.push(measure("n:n",     "n:n", SIZE, TIMES, 'sortByN'));
+st.push(measure("f:n",     "f:n", SIZE, TIMES, 'sortByN'));
+st.push(measure("sortByN", sortByN, SIZE, TIMES));
 
 st.push(measure("s",       "s", SIZE, TIMES, 'sortByS'));
 st.push(measure("s:s",     "s:s", SIZE, TIMES, 'sortByS'));
 st.push(measure("sortByS", sortByS, SIZE, TIMES));
+
+st.push(measure("d",       "d", SIZE, TIMES, 'sortByD'));
+st.push(measure("d:d",    "d:d", SIZE, TIMES, 'sortByD'));
+st.push(measure("sortByD", sortByD, SIZE, TIMES));
 
 st.push('Sparse data, four arguments');
 st.push(measure("f,f2,f3,f4",    ["f","f2", "f3", "f4"], SIZE, TIMES, 'sortByFFFF'));
@@ -34,14 +39,20 @@ st.push(measure("f,f2,f3,f4",    ["f", "f2", "f3", "f4"], SIZE, TIMES, 'sortByFF
 st.push(measure("f: f,f2,f3,f4", ["f:f", "f:f2", "f:f3", "f:f4"], SIZE, TIMES, 'sortByFFFF-D', { f: 10, f2: 10, f3: 10, f4: 10 }));
 st.push(measure("sortByFFFF-D",  sortByFFFF, SIZE, TIMES));
 
-st.push(measure("i,i2,i3,i4",    ["i", "i2", "i3", "i4"], SIZE, TIMES, 'sortByIIII-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
-st.push(measure("i: i,i2,i3,i4", ["i:i", "i:i2", "i:i3", "i:i4"], SIZE, TIMES, 'sortByIIII-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
-st.push(measure("f: i,i2,i3,i4", ["f:i", "f:i2", "f:i3", "f:i4"], SIZE, TIMES, 'sortByIIII-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
-st.push(measure("sortByIIII-D",  sortByIIII, SIZE, TIMES));
+st.push(measure("n,n2,n3,n4",    ["n", "n2", "n3", "n4"], SIZE, TIMES, 'sortByNNNN-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
+st.push(measure("n: n,n2,n3,n4", ["n:n", "n:n2", "n:n3", "n:n4"], SIZE, TIMES, 'sortByNNNN-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
+st.push(measure("f: n,n2,n3,n4", ["f:n", "f:n2", "f:n3", "f:n4"], SIZE, TIMES, 'sortByNNNN-D', { i: 10, i2: 10, i3: 10, i4: 10 }));
+st.push(measure("sortByNNNN-D",  sortByNNNN, SIZE, TIMES));
 
 st.push(measure("s,s2,s3,s4",    ["s", "s2", "s3", "s4"], SIZE, TIMES, 'sortBySSSS-D', { s: 10, s2: 10, s3: 10, s4: 10 }));
 st.push(measure("s: s,s2,s3,s4", ["s:s", "s:s2", "s:s3", "s:s4"], SIZE, TIMES, 'sortBySSSS-D', { s: 10, s2: 10, s3: 10, s4: 10 }));
 st.push(measure("sortBySSSS-D",  sortBySSSS, SIZE, TIMES));
+
+st.push(measure("d,d2,d3,d4",    ["d", "d2", "d3", "d4"], SIZE, TIMES, 'sortByDDDD-D', { d: 10, d2: 10, d3: 10, d4: 10 }));
+st.push(measure("d: d,d2,d3,d4", ["d:d", "d:d2", "d:d3", "d:d4"], SIZE, TIMES, 'sortByDDDD-D', { d: 10, d2: 10, d3: 10, d4: 10 }));
+st.push(measure("sortByDDDD-D",  sortByDDDD, SIZE, TIMES));
+
+
 
 // st.push(measure("f,i,s,f2",       ["f","i", "s", "f2"], SIZE, TIMES, 'sortByFI'));
 // st.push(measure("f:f,i:i,s:s,f:f2", ["f:f","i:i", "s:s", "f:f2"], SIZE, TIMES, 'sortByFI'));
@@ -70,9 +81,6 @@ for (var i in st) {
 	print_stats(st[i]);
 }
 
-function getSortByF() {
-	return sortByF;
-}
 
 function sortByF(a, b) {
 	// if (a['f'] > b['f']) { return -1; }
@@ -89,6 +97,46 @@ function sortByF(a, b) {
 	// 	else if (a[ lst[i].name ] > b[ lst[i].name ]) { return  lst[i].dir; }
 	// }
 }
+function sortByD(a, b) {
+	if (a.d < b.d) { return -1; }
+	else if (a.d > b.d) { return 1; }
+}
+function sortByN(a, b) {
+	if (a.n < b.n) { return -1; }
+	else if (a.n > b.n) { return 1; }
+}
+function sortByS(a, b) {
+	if (a.s > b.s) { return -1; }
+	else if (a.s < b.s) { return 1; }
+}
+function sortByFN(a, b) {
+	if (a.f < b.f) { return -1; }
+	else if (a.f > b.f) { return 1; }
+	else if (a.n < b.n) { return -1; }
+	else if (a.n > b.n) { return 1; }
+}
+function sortByFS(a, b) {
+	if (a.f < b.f) { return -1; }
+	else if (a.f > b.f) { return 1; }
+	else if (a.s < b.s) { return -1; }
+	else if (a.s > b.s) { return 1; }
+}
+function sortBySN(a, b) {
+	if (a.s < b.s) { return -1; }
+	else if (a.s > b.s) { return 1; }
+	else if (a.n < b.n) { return -1; }
+	else if (a.n > b.n) { return 1; }
+}
+function sortByDDDD(a, b) {
+	     if (a.d < b.d) { return -1; }
+	else if (a.d > b.d) { return 1; }
+	else if (a.d2 < b.d2) { return -1; }
+	else if (a.d2 > b.d2) { return 1; }
+	else if (a.d3 < b.d3) { return -1; }
+	else if (a.d3 > b.d3) { return 1; }
+	else if (a.d4 < b.d4) { return -1; }
+	else if (a.d4 > b.d4) { return 1; }
+}
 function sortByFFFF(a, b) {
 	     if (a.f < b.f) { return -1; }
 	else if (a.f > b.f) { return 1; }
@@ -99,15 +147,15 @@ function sortByFFFF(a, b) {
 	else if (a.f4 < b.f4) { return -1; }
 	else if (a.f4 > b.f4) { return 1; }
 }
-function sortByIIII(a, b) {
-	     if (a.i  < b.i) { return -1; }
-	else if (a.i  > b.i) { return 1; }
-	else if (a.i2 < b.i2) { return -1; }
-	else if (a.i2 > b.i2) { return 1; }
-	else if (a.i3 < b.i3) { return -1; }
-	else if (a.i3 > b.i3) { return 1; }
-	else if (a.i4 < b.i4) { return -1; }
-	else if (a.i4 > b.i4) { return 1; }
+function sortByNNNN(a, b) {
+	     if (a.n  < b.n) { return -1; }
+	else if (a.n  > b.n) { return 1; }
+	else if (a.n2 < b.n2) { return -1; }
+	else if (a.n2 > b.n2) { return 1; }
+	else if (a.n3 < b.n3) { return -1; }
+	else if (a.n3 > b.n3) { return 1; }
+	else if (a.n4 < b.n4) { return -1; }
+	else if (a.n4 > b.n4) { return 1; }
 }
 function sortBySSSS(a, b) {
 	     if (a.s < b.s) { return -1; }
@@ -118,34 +166,6 @@ function sortBySSSS(a, b) {
 	else if (a.s3 > b.s3) { return 1; }
 	else if (a.s4 < b.s4) { return -1; }
 	else if (a.s4 > b.s4) { return 1; }
-}
-function sortByFI(a, b) {
-	if (a.f < b.f) { return -1; }
-	else if (a.f > b.f) { return 1; }
-	else if (a.i < b.i) { return -1; }
-	else if (a.i > b.i) { return 1; }
-}
-function sortByFS(a, b) {
-	if (a.f < b.f) { return -1; }
-	else if (a.f > b.f) { return 1; }
-	else if (a.s < b.s) { return -1; }
-	else if (a.s > b.s) { return 1; }
-}
-function sortBySI(a, b) {
-	if (a.s < b.s) { return -1; }
-	else if (a.s > b.s) { return 1; }
-	else if (a.i < b.i) { return -1; }
-	else if (a.i > b.i) { return 1; }
-}
-function sortByI(a, b) {
-	if (a.i < b.i) { return -1; }
-	else if (a.i > b.i) { return 1; }
-	else if (a.f < b.f) { return -1; }
-	else if (a.f > b.f) { return 1; }
-}
-function sortByS(a, b) {
-	if (a.s > b.s) { return -1; }
-	else if (a.s < b.s) { return 1; }
 }
 
 function measure(label, fieldList, N, times, compareTo, mul) {
@@ -160,18 +180,22 @@ function measure(label, fieldList, N, times, compareTo, mul) {
 	key = N.toString() + Object.keys(mul).map(function(e) { return e + '=' + mul[e] }).join(','); // cache key
 	if (!dcache[key]) {
 		m = {
-			f: 999999999999,
-			i: 999999999999,
-			s: 999999999999,
+			f:  999999999999,
 			f2: 999999999999,
-			i2: 999999999999,
-			s2: 999999999999,
 			f3: 999999999999,
-			i3: 999999999999,
-			s3: 999999999999,
 			f4: 999999999999,
-			i4: 999999999999,
-			s4: 999999999999
+			n:  999999999999,
+			n2: 999999999999,
+			n3: 999999999999,
+			n4: 999999999999,
+			s:  999999999999,
+			s2: 999999999999,
+			s3: 999999999999,
+			s4: 999999999999,
+			d:  1382261767000,  // 20 Oct 2013 in milliseconds
+			d2: 1382261767000,
+			d3: 1382261767000,
+			d4: 1382261767000,
 		}
 		if (mul) {
 			for (var j in mul) {
@@ -180,19 +204,23 @@ function measure(label, fieldList, N, times, compareTo, mul) {
 		}
 		for (i = 0; i < N; i++) {
 			data.push({
-				f: Math.random() * m.f,
-				i: Math.round(Math.random() * m.i),
-				s: new Number((Math.random() * m.s)).toString(),
+				f:  Math.random() * m.f,
 				f2: Math.random() * m.f2,
-				i2: Math.round(Math.random() * m.i2),
-				s2: new Number((Math.random() * m.s2)).toString(),
 				f3: Math.random() * m.f3,
-				i3: Math.round(Math.random() * m.i3),
-				s3: new Number((Math.random() * m.s3)).toString(),
 				f4: Math.random() * m.f4,
-				i4: Math.round(Math.random() * m.i4),
+				n:  Math.round(Math.random() * m.n),
+				n2: Math.round(Math.random() * m.n2),
+				n3: Math.round(Math.random() * m.n3),
+				n4: Math.round(Math.random() * m.n4),
+				s:  new Number((Math.random() * m.s)).toString(),
+				s2: new Number((Math.random() * m.s2)).toString(),
+				s3: new Number((Math.random() * m.s3)).toString(),
 				s4: new Number((Math.random() * m.s4)).toString(),
-			})
+				d:  new Date(Math.random() * m.d),
+				d2: new Date(Math.random() * m.d2),
+				d3: new Date(Math.random() * m.d3),
+				d4: new Date(Math.random() * m.d4),
+			});
 		}
 		dcache[key] = data;
 		if (verbose) { console.log('data length =	', data.length, 'generated in', hrtime2ms(process.hrtime(tm_fs)), 'ms'); }

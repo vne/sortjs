@@ -5,7 +5,8 @@ TODO
  *  [+] add tests for in-place array sorts
  *  [+] add function for mandatory inplace sorting
  *  [+] timing and optimization
- *  sort by date
+ *  [+] sort by date
  *  sort arrays of simple values
  *  sort by inner fields (e.g. obj.fld1.fld2, where obj.fld1 is object itself)
- 
+ *  add other sort algorithms
+ *  add sorter selector hint

@@ -28,7 +28,8 @@ arrayOfObjects.sortjs(&quot;price&quot;);</pre></blockquote><h4 class=CHeading>P
 [&quot;-name&quot;, &quot;surname&quot;] - desc sort by property &quot;name&quot;, then asc sort by property &quot;surname&quot;</pre></blockquote><p>By default, there is no type coercion and properties are simply compared.&nbsp; You can specify a type by adding a prefix:</p><blockquote><pre>&quot;s:name&quot; - asc compare as case-sensitive strings
 &quot;i:name&quot; - asc compare as case-insensitive string
 &quot;-f:name&quot; - desc compare as floats
-&quot;n:name&quot; - asc compare as integers</pre></blockquote><p>Be warned that type coercion is SLOW.&nbsp; Avoid prefixes, if you are sure that your data has proper types.</p></div></div></div>
+&quot;n:name&quot; - asc compare as integers
+&quot;d:name&quot; - asc compare as dates (new Date(x) is used to convert x to Date instance)</pre></blockquote><p>Be warned that type coercion is SLOW.&nbsp; Avoid prefixes, if you are sure that your data has proper types.</p></div></div></div>
 
 <div class="CGroup"><div class=CTopic><h3 class=CTitle><a name="Functions"></a>Functions</h3></div></div>
 

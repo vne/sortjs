@@ -1,6 +1,6 @@
 {
   "name": "sortjs",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
   "keywords": [
     "sort",
@@ -14,16 +14,16 @@
   "author": "Vladimir Neverov <sanguini@gmail.com>",
   "homepage": "https://github.com/vne/sortjs/wiki",
   "files": [
-  	"Gruntfile.js",
-  	"LICENCE",
-  	"TODO",
-  	"benchmark.js",
+    "assets/",
+    "benchmark.js",
+    "Gruntfile.js",
+    "LICENCE",
+    "README.md",
     "sort.js",
     "sort.min.js",
-    "README.md",
-    "test.js",
     "test.html",
-    "assets/"
+    "test.js",
+    "TODO"
   ],
   "main": "sort.js",
   "repository": {
@@ -42,6 +42,9 @@
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-simple-mocha": "~0.4.0",
-    "grunt-markdown": "~0.4.0"
+    "grunt-markdown": "~0.4.0",
+    "grunt-natural-docs": "~0.1.1",
+    "grunt-mkdir": "~0.1.1",
+    "grunt-execute": "~0.1.5"
   }
 }
