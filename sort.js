@@ -32,14 +32,14 @@
 		> "name" - asc sort by property "name"
 		> ["name", "surname"] - asc sort by property "name", then asc sort by property "surname"
 		> ["-name", "surname"] - desc sort by property "name", then asc sort by property "surname"
-		By default, there is no type coercion and properties are simply compared. You can specify a type by adding a prefix:
+		By default, there is no type conversion and properties are simply compared. You can specify a type by adding a prefix:
 
 		> "s:name" - asc compare as case-sensitive strings
 		> "i:name" - asc compare as case-insensitive string
 		> "-f:name" - desc compare as floats
 		> "n:name" - asc compare as integers
 		> "d:name" - asc compare as dates (new Date(x) is used to convert x to Date instance)
-		Be warned that type coercion is SLOW. Avoid prefixes, if you are sure that your data has proper types.
+		Be warned that type conversion is SLOW. Avoid prefixes, if you are sure that your data has proper types.
 
 */
 
