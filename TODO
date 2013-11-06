@@ -10,3 +10,4 @@ TODO
  *  sort by inner fields (e.g. obj.fld1.fld2, where obj.fld1 is object itself)
  *  add other sort algorithms
  *  add sorter selector hint
+ *  fix: sorting with prefix by undefined field
