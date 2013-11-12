@@ -57,7 +57,10 @@
 
 		Parameters:
 			fieldList - an array of strings, each string containing the name of object property (with optional prefixes, see README)
-			args - object with additional options
+			args - object with additional options:
+					get - function that returns actual data to sort
+					context - object that contains the actual data
+					hint - manually choose a sorter function (string, one of [U, F, C, 1, S])
 
 		Returns:
 			sorter function
@@ -82,6 +85,7 @@
 			sorters, // available sort functions, one of them is chosen according to hints
 			sorter, // a sort function that is chosen from 'sorters'
 			i, infld, dir, field, opt,
+			hint = args && args.hint ? args.hint.toLowerCase() : undefined,
 			flagfns = {
 				noop: function(x) { return x; },
 				tostring: function(x) { return x.toString(); },
@@ -300,20 +304,21 @@
 			}
 		}; /* sorters */
 
+		// console.log('hint', hint);
 		// choose a most appropriate sort function
-		if (has.flags && (has.contexts || has.callbacks)) {
+		if ((hint === 'u') || !hint && ((has.flags && (has.contexts || has.callbacks)))) {
 			/*console.log('\nuniversal', has.contexts, has.callbacks);*/
 			sorter = sorters.universal;
 			sorter.type = "U";
-		} else if (has.flags) {
+		} else if ((hint === 'f') || (!hint && has.flags)) {
 			/*console.log('\nflags');*/
 			sorter = sorters.withflags;
 			sorter.type = "F";
-		} else if (has.contexts || has.callbacks) {
+		} else if ((hint === 'c') || !hint && (has.contexts || has.callbacks)) {
 			/*console.log('\ncontexts');*/
 			sorter = sorters.withcontexts;
 			sorter.type = "C";
-		} else if (lst.length < 3) {
+		} else if ((hint === '1') || (!hint && (lst.length < 3))) {
 			/*console.log('\nsingle');*/
 			sorter = sorters.single;
 			sorter.type = "1";

@@ -6,8 +6,10 @@ TODO
  *  [+] add function for mandatory inplace sorting
  *  [+] timing and optimization
  *  [+] sort by date
+ *  [+] add sorter selector hint
  *  sort arrays of simple values
  *  sort by inner fields (e.g. obj.fld1.fld2, where obj.fld1 is object itself)
  *  add other sort algorithms
- *  add sorter selector hint
  *  fix: sorting with prefix by undefined field
+ *  add tests for args.get function
+ *  reduce library size by removing unnecessary different sorting functions. Implement type conversion etc via flagfn function

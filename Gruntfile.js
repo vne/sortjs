@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 		},
 		natural_docs: {
 			options: {
-				bin: '/usr/bin/naturaldocs',
+				bin: 'naturaldocs',
 				inputs: ['./'],
 				excludes: ['node_modules/', 'assets/', 'junk/', 'ndoc/'],
 				format: 'HTML',

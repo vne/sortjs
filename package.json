@@ -1,6 +1,6 @@
 {
   "name": "sortjs",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
   "keywords": [
     "sort",
@@ -45,6 +45,7 @@
     "grunt-markdown": "~0.4.0",
     "grunt-natural-docs": "~0.1.1",
     "grunt-mkdir": "~0.1.1",
-    "grunt-execute": "~0.1.5"
+    "grunt-execute": "~0.1.5",
+    "grunt-contrib-clean": "~0.5.0"
   }
 }

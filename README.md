@@ -94,6 +94,26 @@ Examples:
  *  ['i:surname', 'i:name', 'i:midname'] - sort case-insensitevely by surname, then by name, then by midname
  *  ['-n:price', 'i:address'] - reverse numerical (integer) sort by price, then case-insensitevely by address
 
+Sorters and hinting
+-------------------
+
+sortjs.getObjectSorter returns different sorting functions for different field lists trying to avoid unnecessary 
+comparisons and type conversions during actual sort. There are the following sorters:
+ *  universal (U)     - includes all checks and therefore works correctly with all kinds of data
+ *  with_flags (F)    - includes flag checks (i, s, n, etc)
+ *  with_contexts (C) - includes callback/context access to fields that are compared
+ *  single (1)        - the smallest function that is used for simple comparison by three fields or less (no cycle over fields)
+ *  simple (S)        - simple comparison by any number of fields (cycle over fields)
+Sorter is chosen automatically during field list processing. It assumes two points:
+a) the field list is correct
+b) the data in the array that should be sorted correspond to the field list provided
+You can disable automatic choice by specifying which sorter should be used. This is done
+as follows:
+
+ > sortjs.getObjectSorter(fieldList, { hint: 'U' });
+
+This tells sortjs to return universal sorter regardless of its guesses about the data.
+
 Tests and examples
 ------------------
 

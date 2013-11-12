@@ -181,6 +181,18 @@ describe('objectSorter', function() {
 		});
 	});
 
+	describe('hinting', function() {
+		it('should use universal sorter instead of a simple one', function() {
+			assert.equal(sortjs.getObjectSorter(["name"]).type, '1');
+			assert.equal(sortjs.getObjectSorter(["name"], { hint: 'u' }).type, 'U');
+		});
+		it('should use simple sorter instead of a flag one', function() {
+			assert.equal(sortjs.getObjectSorter(["f:name"]).type, 'F');
+			assert.equal(sortjs.getObjectSorter(["f:name"], { hint: '1' }).type, '1');
+		});
+	});
+
+
 });
 
 
@@ -276,3 +288,5 @@ describe('sortjs interface', function() {
 	})
 });
 
+
+	
