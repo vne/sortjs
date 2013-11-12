@@ -78,6 +78,12 @@ describe('objectSorter', function() {
 				clone().sort( sortjs.getObjectSorter(['abcdef', 'test']) ).map(function(e) { return e.id })
 			);
 		});
+		it('should not change order when using non-existing properties with flags for comparison', function() {
+			assert.deepEqual(
+				[1,2,3,4,5,6,7],
+				clone().sort( sortjs.getObjectSorter(['s:abcdef', 'f:test']) ).map(function(e) { return e.id })
+			);
+		});
 		it('should sort by single string argument', function() {
 			assert.deepEqual(
 				[6,3,5,1,2,4,7],

@@ -88,8 +88,8 @@
 			hint = args && args.hint ? args.hint.toLowerCase() : undefined,
 			flagfns = {
 				noop: function(x) { return x; },
-				tostring: function(x) { return x.toString(); },
-				toistring: function(x) { return x.toString().toLowerCase(); },
+				tostring: function(x) { return x ? x.toString() : x; },
+				toistring: function(x) { return x ? x.toString().toLowerCase() : x; },
 				todate: function(x) { return new Date(x); },
 				tofloat: function(x) { return typeof x !== "number" ? parseFloat(x) : x },
 				toint: function(x) { return (typeof x === "number") && (x % 1 === 0) ? x : parseInt(x, 10) }
