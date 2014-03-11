@@ -1,6 +1,6 @@
 {
   "name": "sortjs",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "a lightweight and convenient generator of sort functions for arrays of objects and objects of objects",
   "keywords": [
     "sort",

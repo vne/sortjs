@@ -228,12 +228,22 @@
 				}
 			},
 			single: function(a, b) {
-				if (a[first] < b[first]) { return -lst[0].dir; }
-				else if (a[first] > b[first]) { return lst[0].dir; }
-				else if (a[second] < b[second]) { return -lst[1].dir; }
-				else if (a[second] > b[second]) { return lst[1].dir; }
-				else if (a[third] < b[third]) { return -lst[2].dir; }
-				else if (a[third] > b[third]) { return lst[2].dir; }
+				if (!lst.length) { return; }
+				// console.log(lst, a[first], b[first]);
+				if ((typeof a[first] === "undefined") || (a[first] === null)) { return -lst[0].dir; }
+				if ((typeof b[first] === "undefiend") || (b[first] === null)) { return lst[0].dir; }
+				if      (a[first]  < b[first])  { return -lst[0].dir; }
+				else if (a[first]  > b[first])  { return  lst[0].dir; }
+				if (lst.length < 2) { return; }
+				if ((typeof a[second] === "undefined") || (a[second] === null)) { return -lst[1].dir; }
+				if ((typeof b[second] === "undefiend") || (b[second] === null)) { return lst[1].dir; }
+				if      (a[second] < b[second]) { return -lst[1].dir; }
+				else if (a[second] > b[second]) { return  lst[1].dir; }
+				if (lst.length < 3) { return; }
+				if ((typeof a[third] === "undefined") || (a[third] === null)) { return -lst[2].dir; }
+				if ((typeof b[third] === "undefiend") || (b[third] === null)) { return lst[2].dir; }
+				if      (a[third]  < b[third])  { return -lst[2].dir; }
+				else if (a[third]  > b[third])  { return  lst[2].dir; }
 			},
 			withflags: function(a, b) {
 				var i, ai, bi, f;
